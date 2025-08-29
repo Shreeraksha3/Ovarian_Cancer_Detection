@@ -1,0 +1,48 @@
+.venv/
+*.pyc
+*.pyo
+*.pyo
+*.pyo
+__pycache__/
+*.keras
+media/
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual environment
+# Ignore virtual environments
+.venv/
+venv/
+.venv310/
+
+
+# Environment files
+.env
+*.env
+
+# Database files
+*.sqlite3
+
+# Django static/media
+/staticfiles/
+/media/
+
+# Large ML/AI models
+*.h5
+*.hdf5
+*.keras
+*.pkl
+*.joblib
+
+# Specifically ignore your model
+imageapp/New_Test_model.keras
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
+
+# IDE settings
+.vscode/
+.idea/

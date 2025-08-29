@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <div class="hero-section" style="background-color: #4CAF50; color: #ffffff; padding: 50px 20px; text-align: center;">
+        <div class="">
+            <div>            
+            <h1 style="font-size: 3rem; margin-bottom: 20px;">Welcome to the Image Prediction App</h1>
+            <p style="font-size: 1.2rem; line-height: 1.6; margin-bottom: 30px;">
+                Unlock the power of AI! Upload your images and get detailed predictions from our cutting-edge trained model.
+            </p>
+            <a href="{% url 'upload' %}" style="
+                display: inline-block;
+                background-color: #ffffff;
+                color: #4CAF50;
+                padding: 15px 25px;
+                text-decoration: none;
+                font-size: 1rem;
+                border-radius: 5px;
+                font-weight: bold;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            ">Get Started</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="features-section" style="padding: 40px 20px; text-align: center;">
+        <h2 style="font-size: 2rem; margin-bottom: 20px; color: #333;">What You Can Do</h2>
+        <div class="features" style="display: flex; justify-content: center; gap: 30px; flex-wrap: wrap;">
+            <div class="feature-card" style="
+                width: 250px;
+                background-color: #f9f9f9;
+                border-radius: 8px;
+                padding: 20px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            ">
+                <h3 style="font-size: 1.5rem; margin-bottom: 10px; color: #4CAF50;">Upload Images</h3>
+                <p style="font-size: 0.9rem; color: #555;">
+                    Easily upload your images for AI-based predictions.
+                </p>
+            </div>
+            <div class="feature-card" style="
+                width: 250px;
+                background-color: #f9f9f9;
+                border-radius: 8px;
+                padding: 20px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            ">
+                <h3 style="font-size: 1.5rem; margin-bottom: 10px; color: #4CAF50;">Get Insights</h3>
+                <p style="font-size: 0.9rem; color: #555;">
+                    Receive detailed predictions with probabilities for each class.
+                </p>
+            </div>
+            <div class="feature-card" style="
+                width: 250px;
+                background-color: #f9f9f9;
+                border-radius: 8px;
+                padding: 20px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            ">
+                <h3 style="font-size: 1.5rem; margin-bottom: 10px; color: #4CAF50;">Simple Interface</h3>
+                <p style="font-size: 0.9rem; color: #555;">
+                    A user-friendly interface makes it easy to interact with the app.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="cta-section" style="
+        background-color: #4CAF50;
+        color: #ffffff;
+        padding: 40px 20px;
+        text-align: center;
+    ">
+        <h2 style="font-size: 2rem; margin-bottom: 15px;">Ready to Get Started?</h2>
+        <p style="font-size: 1.2rem; margin-bottom: 20px;">
+            Explore the power of AI with just a click.
+        </p>
+        <a href="{% url 'upload' %}" style="
+            display: inline-block;
+            background-color: #ffffff;
+            color: #4CAF50;
+            padding: 15px 30px;
+            text-decoration: none;
+            font-size: 1rem;
+            border-radius: 5px;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        ">Upload an Image</a>
+    </div>
+{% endblock %}
