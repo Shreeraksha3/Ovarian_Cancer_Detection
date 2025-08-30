@@ -1,8 +1,8 @@
 import smtplib
 from email.message import EmailMessage
 
-my_mail = "shreeraksha2004ch@gmail.com"
-my_password = "Raksha@2004"
+my_mail = "sender_email"
+my_password = "password"
 
 def send_email(subject, recipient_email, template_path, context):
     sender_email = my_mail
