@@ -1,8 +1,8 @@
 import smtplib
 from email.message import EmailMessage
 
-my_mail = "sender_email"
-my_password = "password"
+my_mail = "raksha2004ch@gmail.com"
+my_password = "jpwb foup wmmh olun"
 
 def send_email(subject, recipient_email, template_path, context):
     sender_email = my_mail
@@ -34,10 +34,10 @@ def send_email(subject, recipient_email, template_path, context):
     except Exception as e:
         print(f"Failed to send email: {e}")
 
-# Example usage
-# send_templated_email(
-#     subject="Welcome to Our Service!",
-#     recipient_email="recipient@example.com",
-#     template_path="email_template.html",
-#     context={"name": "Uttam"}
-# )
+
+send_email(
+    subject="Welcome to Our Service!",
+    recipient_email="shreeraksha152ch@gmail.com",   # 👈 Receiver's email
+    template_path="imageapp/utils/predict_email.html",
+    context={"name": "Siya"}
+)
