@@ -284,33 +284,64 @@ def image_upload(request):
     context['form'] = form
     return render(request, 'imageapp/upload.html', context)
 
+# @login_required
+# def send_prediction_email(request):
+#     if request.method == 'POST':
+#         prediction_results = request.session.get('prediction_results')
+#         if prediction_results:
+#             template_path = os.path.join('imageapp', 'templates', 'prediction_email.html')
+            
+#             # Convert predictions dictionary to a formatted string
+#             predictions_str = "\n".join([f"{class_name}: {prob:.2f}" 
+#                                        for class_name, prob in prediction_results['predictions'].items()])
+            
+#             context = {
+#                 'name': request.user.name,
+#                 'highest_class': prediction_results['highest_class'],
+#                 'highest_probability': f"{prediction_results['highest_probability']:.2f}",
+#                 'predictions': predictions_str
+#             }
+            
+#             try:
+#                 send_email(
+#                     subject="Your Image Prediction Results",
+#                     recipient_email=request.user.email,
+#                     template_path=template_path,
+#                     context=context
+#                 )
+#                 return JsonResponse({'status': 'success'})
+#             except Exception as e:
+#                 return JsonResponse({'status': 'error', 'message': str(e)})
+    
+#     return JsonResponse({'status': 'error', 'message': 'Invalid request'})
 @login_required
 def send_prediction_email(request):
     if request.method == 'POST':
         prediction_results = request.session.get('prediction_results')
         if prediction_results:
-            template_path = os.path.join('imageapp', 'templates', 'prediction_email.html')
-            
+            template_path = os.path.join('imageapp', 'utils', 'predict_email.html')
+
             # Convert predictions dictionary to a formatted string
             predictions_str = "\n".join([f"{class_name}: {prob:.2f}" 
-                                       for class_name, prob in prediction_results['predictions'].items()])
-            
+                                         for class_name, prob in prediction_results['predictions'].items()])
+
             context = {
-                'name': request.user.name,
+                'name': request.user.name,  # patient name
                 'highest_class': prediction_results['highest_class'],
                 'highest_probability': f"{prediction_results['highest_probability']:.2f}",
                 'predictions': predictions_str
             }
-            
+
             try:
+                # Send email dynamically to the patient
                 send_email(
                     subject="Your Image Prediction Results",
-                    recipient_email=request.user.email,
+                    recipient_email=request.user.email,  # ✅ dynamic
                     template_path=template_path,
                     context=context
                 )
                 return JsonResponse({'status': 'success'})
             except Exception as e:
                 return JsonResponse({'status': 'error', 'message': str(e)})
-    
+
     return JsonResponse({'status': 'error', 'message': 'Invalid request'})
