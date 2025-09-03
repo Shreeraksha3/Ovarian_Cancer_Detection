@@ -28,6 +28,14 @@
                     </div>
                 </div>
             {% endfor %}
+
+            <!-- 🚨 Show error messages -->
+            {% if form.non_field_errors %}
+                <p class="text-red-500 text-sm mt-2 text-center">
+                    {{ form.non_field_errors|striptags }}
+                </p>
+            {% endif %}
+
             <button type="submit"
                     class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-md
                            shadow-lg transform hover:scale-105 transition duration-300 ease-in-out">

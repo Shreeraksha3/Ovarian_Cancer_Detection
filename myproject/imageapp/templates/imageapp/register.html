@@ -8,36 +8,36 @@
             <h2 class="text-3xl font-bold text-white mb-2">Create an Account</h2>
             <p class="text-gray-400 text-center mb-6">Sign up to get started with our app.</p>
         </div>
-        <form method="post" class="space-y-4">
+        <form method="post" id="registerForm" class="space-y-4" novalidate>
             {% csrf_token %}
-            {% for field in form %}
-                <div class="relative">
-                    <label for="{{ field.id_for_label }}" class="sr-only">{{ field.label }}</label>
-                    <div class="relative rounded-md shadow-sm">
-                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
-                            {% if field.label == 'Username' %}
-                                <i class="fas fa-user"></i>
-                            {% elif field.label == 'Password' or field.label == 'Password confirmation' %}
-                                <i class="fas fa-key"></i>
-                            {% elif field.label == 'Email' %}
-                                <i class="fas fa-envelope"></i>
-                            {% else %}
-                                <i class="fas fa-info-circle"></i>
-                            {% endif %}
-                        </div>
-                        <input type="{{ field.field.widget.input_type }}" name="{{ field.name }}" id="{{ field.id_for_label }}"
-                               class="block w-full pl-10 pr-3 py-2 bg-gray-700 text-white border border-gray-600 rounded-md
-                                      placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                               placeholder="{{ field.label }}" required>
-                    </div>
-                    {% if field.errors %}
-                        <p class="mt-2 text-sm text-red-400">{{ field.errors.as_text }}</p>
-                    {% endif %}
-                </div>
-            {% endfor %}
-            {% if form.non_field_errors %}
-                <div class="text-sm text-red-400 mt-2">{{ form.non_field_errors }}</div>
-            {% endif %}
+            <div class="relative">
+                <label for="id_name" class="sr-only">Name</label>
+                <input type="text" name="name" id="id_name" placeholder="Name" required
+                       class="block w-full pl-10 pr-3 py-2 bg-gray-700 text-white border border-gray-600 rounded-md">
+                <p id="nameError" class="text-sm text-red-400 mt-1 hidden"></p>
+            </div>
+
+            <div class="relative">
+                <label for="id_email" class="sr-only">Email</label>
+                <input type="email" name="email" id="id_email" placeholder="Email" required
+                       class="block w-full pl-10 pr-3 py-2 bg-gray-700 text-white border border-gray-600 rounded-md">
+                <p id="emailError" class="text-sm text-red-400 mt-1 hidden"></p>
+            </div>
+
+            <div class="relative">
+                <label for="id_password1" class="sr-only">Password</label>
+                <input type="password" name="password1" id="id_password1" placeholder="Password" required
+                       class="block w-full pl-10 pr-3 py-2 bg-gray-700 text-white border border-gray-600 rounded-md">
+                <p id="password1Error" class="text-sm text-red-400 mt-1 hidden"></p>
+            </div>
+
+            <div class="relative">
+                <label for="id_password2" class="sr-only">Confirm Password</label>
+                <input type="password" name="password2" id="id_password2" placeholder="Confirm Password" required
+                       class="block w-full pl-10 pr-3 py-2 bg-gray-700 text-white border border-gray-600 rounded-md">
+                <p id="password2Error" class="text-sm text-red-400 mt-1 hidden"></p>
+            </div>
+
             <button type="submit"
                     class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-md
                            shadow-lg transform hover:scale-105 transition duration-300 ease-in-out">
@@ -52,4 +52,78 @@
         </div>
     </div>
 </section>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const nameField = document.getElementById("id_name");
+    const emailField = document.getElementById("id_email");
+    const password1Field = document.getElementById("id_password1");
+    const password2Field = document.getElementById("id_password2");
+
+    const nameError = document.getElementById("nameError");
+    const emailError = document.getElementById("emailError");
+    const password1Error = document.getElementById("password1Error");
+    const password2Error = document.getElementById("password2Error");
+
+    function validateName() {
+        if (nameField.value.trim() === "") {
+            nameError.textContent = "Name is required.";
+            nameError.classList.remove("hidden");
+            return false;
+        }
+        nameError.classList.add("hidden");
+        return true;
+    }
+
+    function validateEmail() {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(emailField.value)) {
+            emailError.textContent = "Enter a valid email address.";
+            emailError.classList.remove("hidden");
+            return false;
+        }
+        emailError.classList.add("hidden");
+        return true;
+    }
+
+    function validatePassword1() {
+        const password = password1Field.value;
+        const errors = [];
+        if (password.length < 8) errors.push("At least 8 characters.");
+        if (!/[A-Z]/.test(password)) errors.push("At least one uppercase letter.");
+        if (!/[a-z]/.test(password)) errors.push("At least one lowercase letter.");
+        if (!/[0-9]/.test(password)) errors.push("At least one digit.");
+        if (!/[@$!%*?&#]/.test(password)) errors.push("At least one special character.");
+
+        if (errors.length > 0) {
+            password1Error.textContent = "Password must have: " + errors.join(" ");
+            password1Error.classList.remove("hidden");
+            return false;
+        }
+        password1Error.classList.add("hidden");
+        return true;
+    }
+
+    function validatePassword2() {
+        if (password2Field.value !== password1Field.value) {
+            password2Error.textContent = "Passwords do not match.";
+            password2Error.classList.remove("hidden");
+            return false;
+        }
+        password2Error.classList.add("hidden");
+        return true;
+    }
+
+    nameField.addEventListener("blur", validateName);
+    emailField.addEventListener("blur", validateEmail);
+    password1Field.addEventListener("blur", validatePassword1);
+    password2Field.addEventListener("blur", validatePassword2);
+
+    document.getElementById("registerForm").addEventListener("submit", function (e) {
+        if (!(validateName() && validateEmail() && validatePassword1() && validatePassword2())) {
+            e.preventDefault();
+        }
+    });
+});
+</script>
 {% endblock %}

@@ -112,12 +112,24 @@ def register(request):
     return render(request, 'imageapp/register.html', {'form': form})
 
 # ------------------ LOGIN VIEW ------------------
+from django.contrib.auth import get_user_model
+
 def user_login(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
             email = form.cleaned_data['email']
             password = form.cleaned_data['password']
+
+            # Check if user exists
+            User = get_user_model()
+            try:
+                user_obj = User.objects.get(email=email)
+            except User.DoesNotExist:
+                form.add_error(None, 'User does not exist')
+                return render(request, 'imageapp/login.html', {'form': form})
+
+            # Authenticate password
             user = authenticate(request, username=email, password=password)
             if user:
                 login(request, user)
@@ -127,6 +139,7 @@ def user_login(request):
     else:
         form = LoginForm()
     return render(request, 'imageapp/login.html', {'form': form})
+
 
 # ------------------ HOME VIEW ------------------
 @login_required
