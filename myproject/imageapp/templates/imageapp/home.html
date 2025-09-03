@@ -1,92 +1,71 @@
 {% extends 'base.html' %}
-
 {% block title %}Home{% endblock %}
-
 {% block content %}
-    <div class="hero-section" style="background-color: #4CAF50; color: #ffffff; padding: 50px 20px; text-align: center;">
-        <div class="">
-            <div>            
-            <h1 style="font-size: 3rem; margin-bottom: 20px;">Welcome to the Image Prediction App</h1>
-            <p style="font-size: 1.2rem; line-height: 1.6; margin-bottom: 30px;">
-                Unlock the power of AI! Upload your images and get detailed predictions from our cutting-edge trained model.
-            </p>
-            <a href="{% url 'upload' %}" style="
-                display: inline-block;
-                background-color: #ffffff;
-                color: #4CAF50;
-                padding: 15px 25px;
-                text-decoration: none;
-                font-size: 1rem;
-                border-radius: 5px;
-                font-weight: bold;
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            ">Get Started</a>
-            </div>
-        </div>
-    </div>
 
-    <div class="features-section" style="padding: 40px 20px; text-align: center;">
-        <h2 style="font-size: 2rem; margin-bottom: 20px; color: #333;">What You Can Do</h2>
-        <div class="features" style="display: flex; justify-content: center; gap: 30px; flex-wrap: wrap;">
-            <div class="feature-card" style="
-                width: 250px;
-                background-color: #f9f9f9;
-                border-radius: 8px;
-                padding: 20px;
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            ">
-                <h3 style="font-size: 1.5rem; margin-bottom: 10px; color: #4CAF50;">Upload Images</h3>
-                <p style="font-size: 0.9rem; color: #555;">
-                    Easily upload your images for AI-based predictions.
-                </p>
-            </div>
-            <div class="feature-card" style="
-                width: 250px;
-                background-color: #f9f9f9;
-                border-radius: 8px;
-                padding: 20px;
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            ">
-                <h3 style="font-size: 1.5rem; margin-bottom: 10px; color: #4CAF50;">Get Insights</h3>
-                <p style="font-size: 0.9rem; color: #555;">
-                    Receive detailed predictions with probabilities for each class.
-                </p>
-            </div>
-            <div class="feature-card" style="
-                width: 250px;
-                background-color: #f9f9f9;
-                border-radius: 8px;
-                padding: 20px;
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            ">
-                <h3 style="font-size: 1.5rem; margin-bottom: 10px; color: #4CAF50;">Simple Interface</h3>
-                <p style="font-size: 0.9rem; color: #555;">
-                    A user-friendly interface makes it easy to interact with the app.
-                </p>
-            </div>
-        </div>
+<div class="relative bg-gray-900 py-24 text-center overflow-hidden">
+    <div class="absolute inset-0 z-0">
+        <img src="https://images.unsplash.com/photo-1542831371-29b0f74f9408?q=80&w=2670&auto=format&fit=crop" alt="Abstract AI background" class="w-full h-full object-cover opacity-30">
     </div>
-
-    <div class="cta-section" style="
-        background-color: #4CAF50;
-        color: #ffffff;
-        padding: 40px 20px;
-        text-align: center;
-    ">
-        <h2 style="font-size: 2rem; margin-bottom: 15px;">Ready to Get Started?</h2>
-        <p style="font-size: 1.2rem; margin-bottom: 20px;">
-            Explore the power of AI with just a click.
+    <div class="relative z-10 px-4">
+        <h1 class="text-4xl sm:text-6xl font-extrabold text-white leading-tight">
+            Unlock the Power of <span class="text-blue-500">AI</span> Image Prediction
+        </h1>
+        <p class="mt-6 text-lg sm:text-xl text-gray-300 max-w-3xl mx-auto">
+            Our cutting-edge model delivers fast, accurate, and insightful predictions for your images.
         </p>
-        <a href="{% url 'upload' %}" style="
-            display: inline-block;
-            background-color: #ffffff;
-            color: #4CAF50;
-            padding: 15px 30px;
-            text-decoration: none;
-            font-size: 1rem;
-            border-radius: 5px;
-            font-weight: bold;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        ">Upload an Image</a>
+        <a href="{% url 'upload' %}" class="mt-10 inline-block bg-blue-600 text-white font-bold py-4 px-10 rounded-full text-lg shadow-lg
+           hover:bg-blue-700 transform hover:scale-105 transition-all duration-300 ease-in-out">
+            <i class="fas fa-bolt mr-2"></i>Get Started
+        </a>
     </div>
+</div>
+
+<section class="py-20 px-4 bg-gray-800">
+    <div class="container mx-auto">
+        <h2 class="text-4xl font-bold text-center text-white mb-12">How It Works</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="bg-gray-700 rounded-xl p-8 text-center shadow-lg transition-transform transform hover:scale-105 duration-300">
+                <div class="bg-blue-500 text-white rounded-full p-4 inline-flex items-center justify-center mb-4">
+                    <i class="fas fa-cloud-upload-alt text-3xl"></i>
+                </div>
+                <h3 class="text-2xl font-semibold text-white mb-2">Upload Images</h3>
+                <p class="text-gray-400">
+                    Simply drag and drop or select an image file from your device.
+                </p>
+            </div>
+            <div class="bg-gray-700 rounded-xl p-8 text-center shadow-lg transition-transform transform hover:scale-105 duration-300">
+                <div class="bg-blue-500 text-white rounded-full p-4 inline-flex items-center justify-center mb-4">
+                    <i class="fas fa-chart-bar text-3xl"></i>
+                </div>
+                <h3 class="text-2xl font-semibold text-white mb-2">Get Predictions</h3>
+                <p class="text-gray-400">
+                    Our AI model analyzes your image and returns a detailed prediction with probabilities for each class.
+                </p>
+            </div>
+            <div class="bg-gray-700 rounded-xl p-8 text-center shadow-lg transition-transform transform hover:scale-105 duration-300">
+                <div class="bg-blue-500 text-white rounded-full p-4 inline-flex items-center justify-center mb-4">
+                    <i class="fas fa-envelope text-3xl"></i>
+                </div>
+                <h3 class="text-2xl font-semibold text-white mb-2">Receive Via Email</h3>
+                <p class="text-gray-400">
+                    Opt to have your prediction results sent directly to your inbox for easy access.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-16 px-4 bg-gray-900 text-center">
+    <div class="container mx-auto">
+        <h2 class="text-3xl sm:text-4xl font-bold text-white">Ready to See the Future of Your Images?</h2>
+        <p class="mt-4 text-gray-400 text-lg max-w-2xl mx-auto">
+            Join thousands of users who are using AI to gain new insights.
+        </p>
+        <a href="{% url 'upload' %}" class="mt-8 inline-block bg-blue-600 text-white font-bold py-4 px-10 rounded-full text-lg shadow-lg
+           hover:bg-blue-700 transform hover:scale-105 transition-all duration-300 ease-in-out">
+            <i class="fas fa-arrow-right mr-2"></i>Start Predicting Now
+        </a>
+    </div>
+</section>
+
 {% endblock %}

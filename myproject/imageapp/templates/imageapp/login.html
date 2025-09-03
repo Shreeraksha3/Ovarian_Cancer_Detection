@@ -1,40 +1,45 @@
 {% extends 'base.html' %}
-
 {% block title %}Login{% endblock %}
-
 {% block content %}
-<div class="container">
-<div class="container-upload" style="max-width: 400px; margin: 50px auto; padding: 20px; background-color: #ffffff; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-    <h2 style="text-align: center; font-size: 2rem; color: #4CAF50; margin-bottom: 20px;">Welcome Back!</h2>
-    <p style="text-align: center; font-size: 1rem; color: #555; margin-bottom: 20px;">
-        Log in to access your account.
-    </p>
-
-    <form method="post" style="margin-bottom: 15px;" class="login-form">
-        {% csrf_token %}
-        <div style="margin-bottom: 15px;">
-            {{ form.as_p }}
+<section class="py-12 px-4 flex items-center justify-center">
+    <div class="bg-gray-800 rounded-2xl shadow-2xl p-8 max-w-sm w-full border border-gray-700">
+        <div class="flex flex-col items-center">
+            <i class="fas fa-lock text-5xl text-blue-500 mb-4"></i>
+            <h2 class="text-3xl font-bold text-white mb-2">Welcome Back!</h2>
+            <p class="text-gray-400 text-center mb-6">Log in to your account to continue.</p>
         </div>
-        <button type="submit" style="
-            width: 100%;
-            background-color: #4CAF50;
-            color: #ffffff;
-            padding: 10px;
-            border: none;
-            border-radius: 4px;
-            font-size: 1rem;
-            font-weight: bold;
-            cursor: pointer;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        ">Login</button>
-    </form>
-
-    <div style="text-align: center; margin-top: 15px;">
-        <p style="font-size: 1rem; color: #555;">
-            Don't have an account? 
-            <a href="{% url 'register' %}" style="color: #4CAF50; text-decoration: none; font-weight: bold;">Register here</a>
-        </p>
+        <form method="post" class="space-y-4">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="relative">
+                    <label for="{{ field.id_for_label }}" class="sr-only">{{ field.label }}</label>
+                    <div class="relative rounded-md shadow-sm">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+                            {% if field.label == 'Username' %}
+                                <i class="fas fa-user"></i>
+                            {% elif field.label == 'Password' %}
+                                <i class="fas fa-key"></i>
+                            {% endif %}
+                        </div>
+                        <input type="{{ field.field.widget.input_type }}" name="{{ field.name }}" id="{{ field.id_for_label }}"
+                               class="block w-full pl-10 pr-3 py-2 bg-gray-700 text-white border border-gray-600 rounded-md
+                                      placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                               placeholder="{{ field.label }}" required>
+                    </div>
+                </div>
+            {% endfor %}
+            <button type="submit"
+                    class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-md
+                           shadow-lg transform hover:scale-105 transition duration-300 ease-in-out">
+                <i class="fas fa-sign-in-alt mr-2"></i>Login
+            </button>
+        </form>
+        <div class="mt-6 text-center">
+            <p class="text-gray-400 text-sm">
+                Don't have an account?
+                <a href="{% url 'register' %}" class="text-blue-500 hover:text-blue-400 font-bold transition-colors duration-200">Register here</a>
+            </p>
+        </div>
     </div>
-    </div>
-</div>
+</section>
 {% endblock %}

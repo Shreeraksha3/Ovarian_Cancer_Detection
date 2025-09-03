@@ -36,6 +36,8 @@ source venv/bin/activate
 
 ```bash
 pip install django djongo pillow numpy pymongo tensorflow
+#python version= 3.10.11
+#tensorflow 2.19.0 (comoatible with trained model)
 ```
 
 ### Step 3: Project Structure
@@ -77,7 +79,7 @@ myproject/
 
 ### Step 4: MongoDB Setup
 
-Follow official MongoDB installation instructions for your OS. Once installed:
+Follow official MongoDB installation instructions for your OS(mongoDB compass). Once installed:
 
 ```bash
 # Start MongoDB service (Linux/Mac)
@@ -108,7 +110,7 @@ DATABASES = {
         'ENGINE': 'djongo',
         'NAME': 'ovaries_cancer',
         'CLIENT': {
-            'host': 'mongodb://localhost:27017/',
+            'host': 'mongodb://localhost:27017/', #or your connecrion string
             # 'username': 'yourUsername',
             # 'password': 'yourPassword',
         }

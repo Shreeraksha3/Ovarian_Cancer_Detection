@@ -1,133 +1,147 @@
 {% extends 'base.html' %}
-
-{% block title %}Image Upload and Prediction{% endblock %}
-
+{% block title %}Image Upload{% endblock %}
 {% block content %}
-    <div class="container">
-        <div class="container-upload" style="max-width: 600px; margin: 20px auto; padding: 20px; background-color: #ffffff; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-            <h1 style="text-align: center; font-size: 2rem; color: #4CAF50; margin-bottom: 20px;">Upload an Image for Prediction</h1>
+<section class="py-12 px-4 flex items-center justify-center">
+    <div class="bg-gray-800 rounded-2xl shadow-2xl p-8 max-w-2xl w-full border border-gray-700">
+        <div class="flex flex-col items-center text-center">
+            <i class="fas fa-upload text-6xl text-blue-500 mb-4"></i>
+            <h1 class="text-3xl font-bold text-white mb-2">Upload an Image for Prediction</h1>
+            <p class="text-gray-400 mb-8">Select an image file to get started with our AI model.</p>
+        </div>
 
-        <form method="post" enctype="multipart/form-data" style="margin-bottom: 20px;">
+        <form method="post" enctype="multipart/form-data" class="space-y-6">
             {% csrf_token %}
-            <div class="form-group" style="margin-bottom: 15px;">
-                {{ form.as_p }}
+            <div class="form-group text-center">
+                <label class="block mb-2 text-sm font-medium text-gray-300">
+                    <span class="sr-only">Choose file</span>
+                    <input type="file" name="{{ form.image.name }}" id="{{ form.image.id_for_label }}"
+                           class="block w-full text-sm text-gray-400
+                                  file:mr-4 file:py-2 file:px-4
+                                  file:rounded-full file:border-0
+                                  file:text-sm file:font-semibold
+                                  file:bg-blue-500 file:text-white
+                                  hover:file:bg-blue-600 transition duration-200 cursor-pointer"
+                           required>
+                </label>
+                {% if form.image.errors %}
+                    <p class="text-sm text-red-400 mt-2">{{ form.image.errors.as_text }}</p>
+                {% endif %}
             </div>
-            <button type="submit" style="
-                background-color: #4CAF50;
-                color: #ffffff;
-                padding: 10px 20px;
-                border: none;
-                border-radius: 4px;
-                font-size: 1rem;
-                cursor: pointer;
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-            ">Upload</button>
+            <button type="submit"
+                    class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-md
+                           shadow-lg transform hover:scale-105 transition duration-300 ease-in-out">
+                <i class="fas fa-check-circle mr-2"></i>Run Prediction
+            </button>
         </form>
 
-        <div id="image-preview" style="text-align: center; margin-bottom: 20px; display: none;">
-            <h3 style="font-size: 1.5rem; color: #333; margin-bottom: 10px;">Image Preview:</h3>
-            <img id="preview-img" src="#" alt="Uploaded Image Preview" style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+        <div id="image-preview" class="mt-8 text-center" style="display: none;">
+            <h3 class="text-xl font-bold text-gray-200 mb-4">Image Preview:</h3>
+            <img id="preview-img" src="#" alt="Uploaded Image Preview"
+                 class="max-w-full rounded-xl shadow-lg border-2 border-gray-700 transition-opacity opacity-0 duration-500 ease-in-out">
         </div>
 
         {% if predictions %}
-            <div class="results" style="margin-top: 30px; padding: 20px; background-color: #f9f9f9; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
-                <h2 style="color: #4CAF50; font-size: 1.8rem; margin-bottom: 15px;">Prediction Results:</h2>
-                <ul class="prediction-list" style="list-style-type: none; padding: 0; margin: 0;">
+            <div class="results-container mt-8 bg-gray-700 p-6 rounded-xl shadow-inner border border-gray-600">
+                <div class="flex items-center justify-center mb-4">
+                    <i class="fas fa-chart-line text-4xl text-blue-500 mr-4"></i>
+                    <h2 class="text-2xl font-bold text-white">Prediction Results</h2>
+                </div>
+                <ul class="space-y-2 mb-6">
                     {% for class_name, probability in predictions.items %}
-                        <li style="margin-bottom: 10px;">
-                            <strong>{{ class_name }}</strong>: {{ probability|floatformat:2 }}%
+                        <li class="flex justify-between items-center py-2 px-4 bg-gray-600 rounded-md">
+                            <span class="text-gray-300 font-medium">{{ class_name }}</span>
+                            <span class="text-white font-bold">{{ probability|floatformat:2 }}%</span>
                         </li>
                     {% endfor %}
                 </ul>
 
-                <div class="highest-result" style="margin-top: 20px; padding: 15px; background-color: #e8f5e9; border-radius: 8px;">
-                    <h3 style="color: #2e7d32; margin-bottom: 10px;">🏆 Highest Probability:</h3>
-                    <p style="margin: 5px 0;">Class: <strong>{{ highest_class }}</strong></p>
-                    <p style="margin: 5px 0;">Probability: <strong>{{ highest_probability|floatformat:2 }}%</strong></p>
+                <div class="highest-result bg-gray-800 p-4 rounded-lg border border-gray-700 flex flex-col sm:flex-row items-center justify-between">
+                    <div class="flex items-center">
+                        <i class="fas fa-award text-3xl text-yellow-400 mr-4"></i>
+                        <div>
+                            <h3 class="text-lg font-bold text-yellow-400">Highest Probability:</h3>
+                            <p class="text-gray-200 text-sm">Class: <span class="font-bold">{{ highest_class }}</span></p>
+                        </div>
+                    </div>
+                    <p class="text-gray-200 text-lg font-bold mt-2 sm:mt-0">{{ highest_probability|floatformat:2 }}%</p>
                 </div>
-                <button type="button" class="mail-btn" style="
-                    margin-top: 20px;
-                    background-color: #4CAF50;
-                    color: #ffffff;
-                    padding: 10px 20px;
-                    border: none;
-                    border-radius: 4px;
-                    font-size: 1rem;
-                    cursor: pointer;
-                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-                " onclick="sendPredictionEmail()">Send Email</button>
+
+                <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 mt-6">
+                    <button type="button" onclick="sendPredictionEmail()"
+                            class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-md
+                                   shadow-lg transform hover:scale-105 transition duration-300 ease-in-out">
+                        <i class="fas fa-envelope mr-2"></i>Send Email
+                    </button>
+                    <button type="button" onclick="resetForm()"
+                            class="w-full bg-gray-600 hover:bg-gray-700 text-gray-200 font-bold py-3 rounded-md
+                                   shadow-lg transform hover:scale-105 transition duration-300 ease-in-out">
+                        <i class="fas fa-redo-alt mr-2"></i>Reset
+                    </button>
+                </div>
             </div>
-            <button onclick="resetForm()" style="margin-top: 20px;
-            background-color: #c04343;
-            color: #ffffff;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            font-size: 1rem;
-            cursor: pointer;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-            ">Reset</button>
         {% endif %}
-        </div>
     </div>
+</section>
 
-    <script>
-        const imageInput = document.querySelector('input[type="file"]');
-        const previewContainer = document.getElementById('image-preview');
-        const previewImage = document.getElementById('preview-img');
+<script>
+    const imageInput = document.querySelector('input[type="file"]');
+    const previewContainer = document.getElementById('image-preview');
+    const previewImage = document.getElementById('preview-img');
 
-        imageInput.addEventListener('change', (event) => {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    previewImage.src = e.target.result;
-                    previewContainer.style.display = "block";
-                };
-                reader.readAsDataURL(file);
+    imageInput.addEventListener('change', (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                previewImage.src = e.target.result;
+                previewContainer.style.display = "block";
+                setTimeout(() => {
+                    previewImage.classList.remove('opacity-0');
+                    previewImage.classList.add('opacity-100');
+                }, 10);
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    function sendPredictionEmail() {
+        fetch('{% url "send_prediction_email" %}', {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                alert('Email sent successfully!');
+            } else {
+                alert('Failed to send email: ' + data.message);
             }
+        })
+        .catch(error => {
+            alert('Error sending email: ' + error);
         });
+    }
 
-        function sendPredictionEmail() {
-            fetch('{% url "send_prediction_email" %}', {
-                method: 'POST',
-                headers: {
-                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
-                },
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === 'success') {
-                    alert('Email sent successfully!');
-                } else {
-                    alert('Failed to send email: ' + data.message);
-                }
-            })
-            .catch(error => {
-                alert('Error sending email: ' + error);
-            });
-        }
-
-        function resetForm() {
-            // Reset the form
-            const form = document.querySelector('form');
-            form.reset();
-            
-            // Hide the image preview
-            const previewContainer = document.getElementById('image-preview');
+    function resetForm() {
+        const form = document.querySelector('form');
+        form.reset();
+        
+        previewImage.classList.remove('opacity-100');
+        previewImage.classList.add('opacity-0');
+        setTimeout(() => {
             previewContainer.style.display = 'none';
-            
-            // Remove prediction results if they exist
-            const resultsDiv = document.querySelector('.results');
-            if (resultsDiv) {
+        }, 500);
+        
+        const resultsDiv = document.querySelector('.results-container');
+        if (resultsDiv) {
+            resultsDiv.classList.remove('animate-fade-in');
+            resultsDiv.classList.add('animate-fade-out');
+            setTimeout(() => {
                 resultsDiv.remove();
-            }
-            
-            // Remove the reset button itself
-            const resetButton = document.querySelector('button[onclick="resetForm()"]');
-            if (resetButton) {
-                resetButton.remove();
-            }
+            }, 500);
         }
-    </script>
+    }
+</script>
 {% endblock %}

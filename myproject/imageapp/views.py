@@ -336,7 +336,7 @@ def send_prediction_email(request):
                 # Send email dynamically to the patient
                 send_email(
                     subject="Your Image Prediction Results",
-                    recipient_email=request.user.email,  # ✅ dynamic
+                    recipient_email=request.user.email,  #  dynamic
                     template_path=template_path,
                     context=context
                 )

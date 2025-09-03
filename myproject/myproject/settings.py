@@ -82,16 +82,15 @@ WSGI_APPLICATION = 'myproject.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-       'default': {
-           'ENGINE': 'djongo',
-           'NAME': 'ovaries_cancer',
-           'CLIENT': {
-               'host': 'mongodb://localhost:27017/',  # Update with your MongoDB connection string
-               # 'username': 'yourUsername',  # Uncomment if using authentication
-               # 'password': 'yourPassword',  # Uncomment if using authentication
-           }
-       }
-   }
+    'default': {
+        'ENGINE': 'djongo',
+        'NAME': 'ovaries_cancer',  # or your database name in Atlas
+        'CLIENT': {
+            'host': 'mongodb+srv://admin:Raksha%402004@cluster0.p2kllzj.mongodb.net/ovaries_cancer?retryWrites=true&w=majority',
+        }
+    }
+}
+
 
 AUTH_USER_MODEL = 'imageapp.CustomUser'
 
