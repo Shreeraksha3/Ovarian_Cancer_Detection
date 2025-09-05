@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +12,10 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
         body {
             font-family: 'Inter', sans-serif;
-            @apply bg-gray-900 text-gray-100;
+            background-image: url("{% static 'imgs/bg.png' %}");
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
         }
         .container {
             @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
@@ -22,8 +26,8 @@
 
     <nav class="bg-gray-800 shadow-lg sticky top-0 z-50">
         <div class="container mx-auto px-4 py-4 flex justify-between items-center">
-            <a href="{% url 'home' %}" class="flex items-center space-x-2 text-xl font-bold text-white hover:text-blue-400 transition-colors duration-200">
-                <i class="fas fa-brain text-blue-500"></i>
+            <a href="{% url 'home' %}" class="flex items-center space-x-2 text-xl font-bold text-white hover:text-teal-400 transition-colors duration-200">
+                <i class="fas fa-brain text-teal-500"></i>
                 <span>AI Predict</span>
             </a>
             <div class="flex items-center space-x-6">
@@ -36,7 +40,7 @@
                         <i class="fas fa-cloud-upload-alt"></i>
                         <span>Upload</span>
                     </a>
-                    <a href="{% url 'logout' %}" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-full transition-colors duration-200">
+                    <a href="{% url 'logout' %}" class="bg-teal-500 hover:bg-teal-600 text-white font-semibold py-2 px-4 rounded-full transition-colors duration-200">
                         <i class="fas fa-sign-out-alt"></i> Logout
                     </a>
                 {% else %}
@@ -44,7 +48,7 @@
                         <i class="fas fa-sign-in-alt"></i>
                         <span>Login</span>
                     </a>
-                    <a href="{% url 'register' %}" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-full transition-colors duration-200">
+                    <a href="{% url 'register' %}" class="bg-teal-500 hover:bg-teal-600 text-white font-semibold py-2 px-4 rounded-full transition-colors duration-200">
                         <i class="fas fa-user-plus"></i> Register
                     </a>
                 {% endif %}

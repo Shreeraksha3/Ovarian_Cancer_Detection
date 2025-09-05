@@ -38,7 +38,6 @@ def preprocess_image(image, target_size):
     image = np.array(image) / 255.0
     image = np.expand_dims(image, axis=0)
     return image
-
 # ---------- Heuristic: looks like H&E histopathology? ----------
 def is_histopathology_like(image_rgb: Image.Image) -> bool:
     """
@@ -88,6 +87,7 @@ def is_histopathology_like(image_rgb: Image.Image) -> bool:
     # Require at least 12% H&E-like pixels (tuneable)
     return tissue_ratio >= 0.12
 
+
 # ------------------ REGISTER VIEW ------------------
 def register(request):
     if request.method == 'POST':
@@ -110,6 +110,7 @@ def register(request):
     else:
         form = RegistrationForm()
     return render(request, 'imageapp/register.html', {'form': form})
+
 
 # ------------------ LOGIN VIEW ------------------
 from django.contrib.auth import get_user_model
@@ -146,6 +147,7 @@ def user_login(request):
 def home(request):
     return render(request, 'imageapp/home.html')
 
+
 # ------------------ IMAGE UPLOAD ------------------
 @login_required
 def image_upload(request):
@@ -157,6 +159,10 @@ def image_upload(request):
             image_instance.user = request.user
             image_instance.save()
 
+            # get uploaded image URL to keep preview after reload
+            uploaded_image_url = image_instance.image.url
+            context['uploaded_image_url'] = uploaded_image_url
+
             patient_email = request.POST.get('patient_email')
 
             try:
@@ -166,8 +172,7 @@ def image_upload(request):
                 # Open image
                 image_file = form.cleaned_data['image']
                 image = Image.open(image_file)
-
-                # Reject non-colored images early
+            # Reject non-colored images early
                 if image.mode not in ["RGB", "RGBA"]:
                     context['error_message'] = "Invalid image uploaded. Please upload a valid colored histopathology image."
                     context['form'] = form
@@ -184,6 +189,7 @@ def image_upload(request):
 
                 # Preprocess valid image
                 processed_image = preprocess_image(image_rgb, target_size=(224, 224))
+                
 
                 # Make prediction
                 predictions = model.predict(processed_image).flatten()
@@ -196,6 +202,7 @@ def image_upload(request):
                 context['highest_class'] = highest_class_name
                 context['highest_probability'] = float(highest_probability)
 
+                # save for email
                 request.session['prediction_results'] = {
                     'predictions': context['predictions'],
                     'highest_class': highest_class_name,
@@ -212,6 +219,7 @@ def image_upload(request):
 
     context['form'] = form
     return render(request, 'imageapp/upload.html', context)
+
 
 # ------------------ SEND EMAIL ------------------
 @login_required
