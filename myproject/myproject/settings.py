@@ -84,12 +84,14 @@ WSGI_APPLICATION = 'myproject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
-        'NAME': 'Ovary_cancer',   # Your actual DB name
+        'NAME': 'Ovary_cancer',  # database name (Atlas will create it automatically on first use)
         'CLIENT': {
-            'host': 'mongodb+srv://admin:Raksha%402004@cluster0.p2kllzj.mongodb.net/?retryWrites=true&w=majority',
+            'host': 'mongodb+srv://raksha2004ch:Raksha%402004@cluster0.wqrbckx.mongodb.net/',
+            
         }
     }
 }
+
 
 
 
