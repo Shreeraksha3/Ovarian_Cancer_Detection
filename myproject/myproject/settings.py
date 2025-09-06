@@ -84,12 +84,13 @@ WSGI_APPLICATION = 'myproject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
-        'NAME': 'ovaries_cancer',  # or your database name in Atlas
+        'NAME': 'Ovary_cancer',   # Your actual DB name
         'CLIENT': {
-            'host': 'mongodb+srv://admin:Raksha%402004@cluster0.p2kllzj.mongodb.net/ovaries_cancer?retryWrites=true&w=majority',
+            'host': 'mongodb+srv://admin:Raksha%402004@cluster0.p2kllzj.mongodb.net/?retryWrites=true&w=majority',
         }
     }
 }
+
 
 
 AUTH_USER_MODEL = 'imageapp.CustomUser'
