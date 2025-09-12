@@ -3,8 +3,8 @@ import smtplib
 from email.message import EmailMessage
 import os
 
-my_mail = "raksha2004ch@gmail.com"
-my_password = "jpwb foup wmmh olun"
+my_mail = "ovarian.cancer.ai@gmail.com"
+my_password = "ydpr yndm dcip thau"
 
 def send_email(subject, recipient_email, template_path, context):
     """
