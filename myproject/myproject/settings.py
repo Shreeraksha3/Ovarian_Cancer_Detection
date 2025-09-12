@@ -155,8 +155,8 @@ EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 EMAIL_HOST_USER = "ovarian.cancer.ai@gmail.com"
 EMAIL_HOST_PASSWORD = "ydpr yndm dcip thau" 
-#EMAIL_HOST_USER = "raksha2004ch@gmail.com"
-#EMAIL_HOST_PASSWORD = "jpwb foup wmmh olun" # your Gmail App Password
+ # your Gmail App Password
+
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 
